@@ -49,10 +49,6 @@ class _CollegeDropdownState extends State<CollegeDropdown> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Select a College:',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
         const SizedBox(height: 10),
         DropdownButtonFormField<String>(
           value: selectedCollegeName,
@@ -69,7 +65,7 @@ class _CollegeDropdownState extends State<CollegeDropdown> {
                       (college) => college['collegeName'] == value)['clgDbId'];
             });
 
-            widget.onCollegeChanged(selectedCollegeId); // Call the callback with selected college ID
+            widget.onCollegeChanged(selectedCollegeId); // Pass the selected college ID
           },
           decoration: InputDecoration(
             labelText: 'College Name',

@@ -21,10 +21,10 @@ class DropdownInputField<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: theme.textTheme.bodyLarge,
-        ),
+        // Text(
+        //   label,
+        //   style: theme.textTheme.bodyLarge,
+        // ),
         const SizedBox(height: 8),
         DropdownButtonFormField<T>(
           value: selectedValue,
@@ -42,6 +42,7 @@ class DropdownInputField<T> extends StatelessWidget {
             enabledBorder: theme.inputDecorationTheme.enabledBorder,
             focusedBorder: theme.inputDecorationTheme.focusedBorder,
             labelStyle: theme.inputDecorationTheme.labelStyle,
+            labelText: label
           ),
         ),
       ],

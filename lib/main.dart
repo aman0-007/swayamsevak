@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swayamsevak/pages/login_page.dart';
+import 'package:swayamsevak/pages/enrollment_page.dart';
 import 'package:swayamsevak/theme/myAppTheme.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: CustomTheme.theme,  // Use the custom theme here
-      home: const LoginPage(),
+      home: const EnrollmentPage(),
     );
   }
 }

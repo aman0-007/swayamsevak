@@ -113,6 +113,22 @@ class CustomTheme {
         elevation: 8,
       ),
 
+      // Snackbar theme
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: coral, // Background color of the snackbar
+        contentTextStyle: GoogleFonts.montserrat(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: white, // Text color in the snackbar
+        ),
+        actionTextColor: white, // Color of action buttons in the snackbar
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        behavior: SnackBarBehavior.floating, // Floating style for the snackbar
+        elevation: 4, // Shadow elevation
+      ),
+
       // Input Decoration theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
