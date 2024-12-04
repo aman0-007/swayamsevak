@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:swayamsevak/pages/enrollment_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swayamsevak/components/bottomnav/bottomnavigation.dart';
+import 'package:swayamsevak/pages/leaderpages/allstudents.dart';
+import 'package:swayamsevak/pages/login_page.dart';
 import 'package:swayamsevak/theme/myAppTheme.dart';
 
 void main() {
@@ -14,12 +17,39 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: CustomTheme.theme,  // Use the custom theme here
-      home: const EnrollmentPage(),
+      theme: CustomTheme.theme,
+      home: AllStudentsPage(),
+      //home: const CheckLoginState(),
     );
   }
 }
 
+class CheckLoginState extends StatelessWidget {
+  const CheckLoginState({Key? key}) : super(key: key);
+
+  Future<bool> _isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _isLoggedIn(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          if (snapshot.data == true) {
+            return const BottomNavApp();
+          } else {
+            return const LoginPage();
+          }
+        }
+      },
+    );
+  }
+}
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
 
