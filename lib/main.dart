@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swayamsevak/components/bottomnav/bottomnavigation.dart';
-import 'package:swayamsevak/pages/leaderpages/allstudents.dart';
 import 'package:swayamsevak/pages/login_page.dart';
+import 'package:swayamsevak/router/leaderrouter/routes.dart';
 import 'package:swayamsevak/theme/myAppTheme.dart';
 
 void main() {
@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: CustomTheme.theme,
-      home: AllStudentsPage(),
+      routerConfig: router,
       //home: const CheckLoginState(),
     );
   }
@@ -50,6 +50,7 @@ class CheckLoginState extends StatelessWidget {
     );
   }
 }
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
 
