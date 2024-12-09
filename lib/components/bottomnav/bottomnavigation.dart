@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swayamsevak/pages/dashboard.dart';
 import 'package:swayamsevak/pages/options_page.dart';
+import 'package:swayamsevak/pages/popages/pooptions.dart';
 
 class BottomNavApp extends StatefulWidget {
   const BottomNavApp({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _BottomNavAppState extends State<BottomNavApp> {
   // Define the pages for navigation
   final List<Widget> _pages = [
     const UserDashboard(),
-    const OptionsPage(),
+    const POOptionsPage(),
     const SettingsView(),
   ];
 

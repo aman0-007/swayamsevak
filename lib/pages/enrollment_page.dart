@@ -8,6 +8,7 @@ import 'package:swayamsevak/components/enrollment_page/password_input.dart';
 import 'package:swayamsevak/components/enrollment_page/text_input.dart';
 import 'package:swayamsevak/components/enrollment_page/nss_batch_dropdown.dart';
 import 'package:swayamsevak/components/enrollment_page/year_dropdown.dart';
+import 'package:swayamsevak/pages/login_page.dart';
 
 class EnrollmentPage extends StatefulWidget {
   const EnrollmentPage({Key? key}) : super(key: key);
@@ -68,6 +69,10 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
     try {
       final response = await backendService.addStudent(selectedCollegeId!, formData);
       _showSnackbar(response['message'] ?? "Student added successfully", Colors.green);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
     } catch (e) {
       _showSnackbar("An error occurred: $e", Colors.red);
     }
