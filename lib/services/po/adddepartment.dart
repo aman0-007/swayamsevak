@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProjectService {
-  static Future<String> addProject(String projectName) async {
+class DepartmentService {
+  static Future<String> addDepartment(String departmentName, List<String> classes) async {
     try {
-      // Retrieve clgDbId from SharedPreferences
+      // Retrieve ClgID from SharedPreferences
       final prefs = await SharedPreferences.getInstance();
       final userData = prefs.getString('user_data');
       if (userData == null) {
@@ -18,11 +18,16 @@ class ProjectService {
         throw Exception("ClgID not found in user data");
       }
 
-      final url = Uri.parse("http://213.210.37.81:1234/api/create-project/$clgDbId");
+      // API endpoint
+      final url = Uri.parse("http://213.210.37.81:1234/api/add-department/$clgDbId");
+
+      // Request body
       final requestBody = jsonEncode({
-        "projectName": projectName,
+        "department_name": departmentName,
+        "classes": classes,
       });
 
+      // Make POST request
       final response = await http.post(
         url,
         headers: {
@@ -31,11 +36,12 @@ class ProjectService {
         body: requestBody,
       );
 
-      if (response.statusCode == 201) {
+      // Handle response
+      if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        return responseData['message'] ?? "Project added successfully";
+        return responseData['message'] ?? "Department added successfully";
       } else {
-        throw Exception("Failed to add project: ${response.reasonPhrase}");
+        throw Exception("Failed to add department: ${response.reasonPhrase}");
       }
     } catch (e) {
       throw Exception("Error: ${e.toString()}");

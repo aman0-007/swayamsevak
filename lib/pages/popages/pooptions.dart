@@ -15,6 +15,8 @@ class POOptionsPage extends StatelessWidget {
     {"title": "All Students", "route": "/poAllStudents", "icon": Icons.person},
     {"title": "All Groups", "route": "/poAllGroups", "icon": Icons.groups},
     {"title": "Stats", "route": "/poStats", "icon": Icons.bar_chart},
+    {"title": "Add Department", "route": "/poAddDepartment", "icon": Icons.add},
+
   ];
 
   @override

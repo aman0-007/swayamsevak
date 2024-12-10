@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swayamsevak/components/enrollment_page/snackbar.dart';
 import 'package:swayamsevak/services/po/addproject.dart';
 
 class AddProjectPage extends StatefulWidget {
@@ -23,16 +24,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
         final message = await ProjectService.addProject(
           _projectNameController.text.trim(),
         );
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
-
+        SnackbarHelper.showSnackbar(context: context, message: message, backgroundColor: Colors.green);
         _projectNameController.clear();
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString())),
-        );
+        SnackbarHelper.showSnackbar(context: context, message: e.toString(), backgroundColor: Colors.red);
       } finally {
         setState(() {
           _isLoading = false;

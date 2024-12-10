@@ -3,6 +3,7 @@ import 'package:swayamsevak/components/bottomnav/bottomnavigation.dart';
 import 'package:swayamsevak/main.dart';
 import 'package:swayamsevak/pages/enrollment_page.dart';
 import 'package:swayamsevak/pages/leaderpages/allstudents.dart';
+import 'package:swayamsevak/pages/popages/adddepartment_page.dart';
 import 'package:swayamsevak/pages/popages/addproject_page.dart';
 
 GoRouter router = GoRouter(
@@ -15,11 +16,6 @@ GoRouter router = GoRouter(
       path: '/addEvent',
       builder: (context, state) => const AllStudentsPage(),
     ),
-    GoRoute(
-      path: '/addEvent',
-      builder: (context, state) => const AllStudentsPage(),
-    ),
-
 
 
 
@@ -27,6 +23,10 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/poAddProject',
       builder: (context, state) => const AddProjectPage(),
+    ),
+    GoRoute(
+      path: '/poAddDepartment',
+      builder: (context, state) => const AddDepartmentPage(),
     ),
   ],
 );

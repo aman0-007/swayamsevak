@@ -5,6 +5,7 @@ import 'package:swayamsevak/components/enrollment_page/department_dropdown.dart'
 import 'package:swayamsevak/components/enrollment_page/dropdown_input.dart';
 import 'package:swayamsevak/components/enrollment_page/email_input.dart';
 import 'package:swayamsevak/components/enrollment_page/password_input.dart';
+import 'package:swayamsevak/components/enrollment_page/snackbar.dart';
 import 'package:swayamsevak/components/enrollment_page/text_input.dart';
 import 'package:swayamsevak/components/enrollment_page/nss_batch_dropdown.dart';
 import 'package:swayamsevak/components/enrollment_page/year_dropdown.dart';
@@ -63,34 +64,21 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
         selectedYear == "" ||
         selectedCollege == "" || // Ensure selectedCollege is not empty
         formData.values.any((value) => value.isEmpty)) {
-      _showSnackbar("other out all fields", Colors.red);
+      SnackbarHelper.showSnackbar(context: context, message: "other out all fields", backgroundColor: Colors.red);
       return;
     }
     try {
       final response = await backendService.addStudent(selectedCollegeId!, formData);
-      _showSnackbar(response['message'] ?? "Student added successfully", Colors.green);
+      SnackbarHelper.showSnackbar(context: context, message: response['message'] ?? "Student added successfully", backgroundColor: Colors.green);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     } catch (e) {
-      _showSnackbar("An error occurred: $e", Colors.red);
+      SnackbarHelper.showSnackbar(context: context, message: "An error occurred: $e", backgroundColor: Colors.red);
     }
   }
 
-  void _showSnackbar(String message, Color backgroundColor) {
-    final theme = Theme.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white)),
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 3),
-      ),
-    );
-  }
-
-  // Callback function for year selection
   void _onYearChanged(String? year) {
     setState(() {
       selectedYear = year;
