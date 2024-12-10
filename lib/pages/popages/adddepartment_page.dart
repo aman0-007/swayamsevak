@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swayamsevak/components/enrollment_page/snackbar.dart';
+import 'package:swayamsevak/components/enrollment_page/text_input.dart';
 import 'package:swayamsevak/services/po/adddepartment.dart';
 
 class AddDepartmentPage extends StatefulWidget {
@@ -75,19 +76,20 @@ class _AddDepartmentPageState extends State<AddDepartmentPage> {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _departmentNameController,
-                decoration: const InputDecoration(
-                  labelText: "Department Name",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Please enter a department name";
-                  }
-                  return null;
-                },
-              ),
+              TextInputField(label: "Department Name",controller: _departmentNameController),
+              // TextFormField(
+              //   controller: _departmentNameController,
+              //   decoration: const InputDecoration(
+              //     labelText: "Department Name",
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   validator: (value) {
+              //     if (value == null || value.trim().isEmpty) {
+              //       return "Please enter a department name";
+              //     }
+              //     return null;
+              //   },
+              // ),
               const SizedBox(height: 20),
               Text(
                 "Add Classes",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swayamsevak/components/enrollment_page/snackbar.dart';
+import 'package:swayamsevak/components/enrollment_page/text_input.dart';
 import 'package:swayamsevak/services/po/addproject.dart';
 
 class AddProjectPage extends StatefulWidget {
@@ -57,19 +58,20 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 style: theme.textTheme.bodySmall,
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _projectNameController,
-                decoration: const InputDecoration(
-                  labelText: "Project Name",
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Please enter a project name";
-                  }
-                  return null;
-                },
-              ),
+              TextInputField(label: "Project Name",controller: _projectNameController),
+              // TextFormField(
+              //   controller: _projectNameController,
+              //   decoration: const InputDecoration(
+              //     labelText: "Project Name",
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   validator: (value) {
+              //     if (value == null || value.trim().isEmpty) {
+              //       return "Please enter a project name";
+              //     }
+              //     return null;
+              //   },
+              // ),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
