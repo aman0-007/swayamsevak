@@ -6,7 +6,7 @@ class POOptionsPage extends StatelessWidget {
 
   final List<Map<String, dynamic>> options = const [
     {"title": "Approve Event", "route": "/poApproveEvent", "icon": Icons.event_available},
-    {"title": "Confirm Volunteer", "route": "/poConfirmVolunteer", "icon": Icons.volunteer_activism},
+    {"title": "Confirm Students", "route": "/poConfirmStudents", "icon": Icons.volunteer_activism},
     {"title": "Add Project", "route": "/poAddProject", "icon": Icons.add_box},
     {"title": "Add Teacher", "route": "/poAddTeacher", "icon": Icons.person_add},
     {"title": "Add PO", "route": "/poAddPO", "icon": Icons.account_circle},
@@ -16,7 +16,7 @@ class POOptionsPage extends StatelessWidget {
     {"title": "All Groups", "route": "/poAllGroups", "icon": Icons.groups},
     {"title": "Stats", "route": "/poStats", "icon": Icons.bar_chart},
     {"title": "Add Department", "route": "/poAddDepartment", "icon": Icons.add},
-
+    {"title": "Add Group", "route": "/poAddGroup", "icon": Icons.add},
   ];
 
   @override
