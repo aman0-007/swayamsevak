@@ -5,7 +5,7 @@ class LeaderOptionsPage extends StatelessWidget {
   const LeaderOptionsPage({Key? key}) : super(key: key);
 
   final List<Map<String, dynamic>> options = const [
-    {"title": "Add Event", "route": "/addEvent", "icon": Icons.event},
+    {"title": "Add Event", "route": "/leaderAddEvent", "icon": Icons.event},
     {"title": "Confirm Student", "route": "/confirmStudent", "icon": Icons.check_circle},
     {"title": "Assign Group", "route": "/assignGroup", "icon": Icons.group_add},
     {"title": "All Groups", "route": "/allGroups", "icon": Icons.group},
