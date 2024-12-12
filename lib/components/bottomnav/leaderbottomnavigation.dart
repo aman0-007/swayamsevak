@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:swayamsevak/pages/dashboard.dart';
-import 'package:swayamsevak/pages/popages/pooptions.dart';
+import 'package:swayamsevak/pages/leaderpages/leaderoption_page.dart';
 
-class POBottomNavApp extends StatefulWidget {
-  const POBottomNavApp({Key? key}) : super(key: key);
+class LeaderBottomNavApp extends StatefulWidget {
+  const LeaderBottomNavApp({Key? key}) : super(key: key);
 
   @override
-  State<POBottomNavApp> createState() => _POBottomNavAppState();
+  State<LeaderBottomNavApp> createState() => _LeaderBottomNavAppState();
 }
 
-class _POBottomNavAppState extends State<POBottomNavApp> {
+class _LeaderBottomNavAppState extends State<LeaderBottomNavApp> {
   int _selectedIndex = 0;
 
   // Define the pages for navigation
   final List<Widget> _pages = [
     const UserDashboard(),
-    const POOptionsPage(),
+    const LeaderOptionsPage(),
     const SettingsView(),
   ];
 

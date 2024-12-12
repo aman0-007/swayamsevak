@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class OptionsPage extends StatelessWidget {
-  const OptionsPage({Key? key}) : super(key: key);
+class StudentOptionsPage extends StatelessWidget {
+  const StudentOptionsPage({Key? key}) : super(key: key);
 
   final List<Map<String, dynamic>> options = const [
     {"title": "Add Event", "route": "/addEvent", "icon": Icons.event},
-    {"title": "Confirm Student", "route": "/confirmStudent", "icon": Icons.check_circle},
-    {"title": "Assign Group", "route": "/assignGroup", "icon": Icons.group_add},
-    {"title": "All Groups", "route": "/allGroups", "icon": Icons.group},
-    {"title": "Previous Events", "route": "/previousEvents", "icon": Icons.history},
-    {"title": "All Students", "route": "/allStudents", "icon": Icons.person},
-    {"title": "Marks Attendance", "route": "/marksAttendance", "icon": Icons.checklist},
-    {"title": "Update Student ID", "route": "/updateStudentID", "icon": Icons.edit},
-    {"title": "Complete Event", "route": "/completeEvent", "icon": Icons.done_all},
-    {"title": "Live Events", "route": "/liveEvents", "icon": Icons.live_tv},
-    {"title": "Completed Events", "route": "/completedEvents", "icon": Icons.check_circle_outline},
-    {"title": "My Attendance", "route": "/myAttendance", "icon": Icons.assignment},
-    {"title": "Mark My Attendance", "route": "/markMyAttendance", "icon": Icons.mark_chat_read},
-    {"title": "Update Password", "route": "/updatePassword", "icon": Icons.lock},
+    // {"title": "Confirm Student", "route": "/confirmStudent", "icon": Icons.check_circle},
+    // {"title": "Assign Group", "route": "/assignGroup", "icon": Icons.group_add},
+    // {"title": "All Groups", "route": "/allGroups", "icon": Icons.group},
+    // {"title": "Previous Events", "route": "/previousEvents", "icon": Icons.history},
+    {"title": "Apply-Leader", "route": "/applyforleader", "icon": Icons.person},
+    // {"title": "Marks Attendance", "route": "/marksAttendance", "icon": Icons.checklist},
+    // {"title": "Update Student ID", "route": "/updateStudentID", "icon": Icons.edit},
+    // {"title": "Complete Event", "route": "/completeEvent", "icon": Icons.done_all},
+    // {"title": "Live Events", "route": "/liveEvents", "icon": Icons.live_tv},
+    // {"title": "Completed Events", "route": "/completedEvents", "icon": Icons.check_circle_outline},
+    // {"title": "My Attendance", "route": "/myAttendance", "icon": Icons.assignment},
+    // {"title": "Mark My Attendance", "route": "/markMyAttendance", "icon": Icons.mark_chat_read},
+    // {"title": "Update Password", "route": "/updatePassword", "icon": Icons.lock},
   ];
 
   @override

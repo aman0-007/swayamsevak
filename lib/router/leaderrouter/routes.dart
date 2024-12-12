@@ -8,7 +8,9 @@ import 'package:swayamsevak/pages/popages/adddepartment_page.dart';
 import 'package:swayamsevak/pages/popages/addpo_page.dart';
 import 'package:swayamsevak/pages/popages/addproject_page.dart';
 import 'package:swayamsevak/pages/popages/addteacher_page.dart';
+import 'package:swayamsevak/pages/popages/makeleader_page.dart';
 import 'package:swayamsevak/pages/popages/notselectedstudents_page.dart';
+import 'package:swayamsevak/pages/volunteerpages/applyleader.dart';
 
 GoRouter router = GoRouter(
   routes: [
@@ -16,12 +18,17 @@ GoRouter router = GoRouter(
       path: '/',
       builder: (context, state) => const CheckLoginState(),
     ),
+
+    //=============================== Volunteer =================================================
+
+    GoRoute(
+      path: '/applyforleader',
+      builder: (context, state) => const ApplyLeaderPage(),
+    ),
     GoRoute(
       path: '/addEvent',
       builder: (context, state) => const AllStudentsPage(),
     ),
-
-
 
     //=============================== PO =================================================
     GoRoute(
@@ -47,6 +54,10 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/poConfirmStudents',
       builder: (context, state) =>  NotSelectedStudents(),
+    ),
+    GoRoute(
+      path: '/poAppliedLeadersPage',
+      builder: (context, state) =>  AppliedLeadersPage(),
     ),
   ],
 );

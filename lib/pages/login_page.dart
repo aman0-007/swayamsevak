@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swayamsevak/components/bottomnav/bottomnavigation.dart';
 import 'package:swayamsevak/components/enrollment_page/password_input.dart';
 import 'package:swayamsevak/components/enrollment_page/text_input.dart';
 import 'package:swayamsevak/components/login_page/login.dart';
-import 'package:swayamsevak/pages/dashboard.dart';
+import 'package:swayamsevak/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
       // Navigate to UserDashboard
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const BottomNavApp()),
+        MaterialPageRoute(builder: (context) => const CheckLoginState()),
       );
     } else {
       _showSnackbar(result['error'], Colors.red);
