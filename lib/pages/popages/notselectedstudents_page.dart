@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:swayamsevak/components/enrollment_page/snackbar.dart';
 import 'package:swayamsevak/services/po/addteacher.dart';
 
 class NotSelectedStudents extends StatefulWidget {
@@ -45,20 +46,26 @@ class _NotSelectedStudentsState extends State<NotSelectedStudents> {
 
   Future<void> updateStudentStatus(String clgDbId, String studentId) async {
     final url = 'http://213.210.37.81:1234/api/direct-update-status/$clgDbId/$studentId';
-    final response = await http.post(Uri.parse(url));
+    try {
+      final response = await http.put(Uri.parse(url));
+      print(url);
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data['message'] == 'Status updated successfully') {
-        // Refresh the students list
-        setState(() {
-          _students = fetchStudents(clgDbId);
-        });
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = json.decode(response.body);
+        if (data['message'] == 'Student status and related fields updated successfully') {
+          // Refresh the students list
+          setState(() {
+            _students = fetchStudents(clgDbId);
+          });
+          SnackbarHelper.showSnackbar(context: context, message: 'Student status updated successfully', backgroundColor: Colors.green);
+        } else {
+          SnackbarHelper.showSnackbar(context: context, message: 'Unexpected response: ${data['message']}', backgroundColor: Colors.red);
+        }
       } else {
-        throw Exception('Failed to update student status');
+        throw Exception('Failed to update student status: ${response.reasonPhrase}');
       }
-    } else {
-      throw Exception('Failed to update student status');
+    } catch (e) {
+      SnackbarHelper.showSnackbar(context: context, message: 'Error: $e', backgroundColor: Colors.red);
     }
   }
 
@@ -128,16 +135,12 @@ class _NotSelectedStudentsState extends State<NotSelectedStudents> {
             ),
             TextButton(
               onPressed: () async {
+                Navigator.pop(context); // Close the dialog immediately
                 final clgDbId = await _teacherService.getClgDbId();
                 if (clgDbId != null) {
                   await updateStudentStatus(clgDbId, student.studId);
-                  Navigator.pop(context); // Close the dialog
                 } else {
-                  // Handle error if clgDbId is not found
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: College Database ID not found')),
-                  );
+                  SnackbarHelper.showSnackbar(context: context, message: 'Error: College Database ID not found', backgroundColor: Colors.red);
                 }
               },
               child: Text('Confirm'),
