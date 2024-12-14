@@ -11,15 +11,15 @@ class POService {
       if (poData.containsKey('user')) {
         final userDetails = poData['user'];
         return {
-          'clgDbId': poData['clgDbId'],
-          'teacherId': userDetails['teacher_id'],
-          'name': userDetails['name'],
-          'username': userDetails['username'],
-          'email': userDetails['email'],
-          'projectId': userDetails['project_id'],
-          'role': userDetails['role'].join(', '),
-          'currentNssBatch': userDetails['currentNssBatch'],
-          'previousNssBatch': userDetails['previousNssBatch'].join(', '),
+          'clgDbId': poData['clgDbId'].toString(),
+          'teacherId': userDetails['teacher_id'].toString(),
+          'name': userDetails['name'].toString(),
+          'username': userDetails['username'].toString(),
+          'email': userDetails['email'].toString(),
+          'projectId': userDetails['project_id'].toString(),
+          'role': userDetails['role'].join(', ').toString(),
+          'currentNssBatch': userDetails['currentNssBatch'].toString(),
+          'previousNssBatch': userDetails['previousNssBatch'].join(', ').toString(),
         };
       }
     }

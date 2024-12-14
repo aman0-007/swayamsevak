@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:swayamsevak/components/datepicker/fordate.dart';
 import 'package:swayamsevak/components/enrollment_page/text_input.dart';
+import 'package:swayamsevak/components/projectdropdown/projectdropdown.dart';
+import 'package:swayamsevak/components/teacherdropdown/teacherdropdown.dart';
 import 'package:swayamsevak/services/leader/addevent.dart';
 import 'package:swayamsevak/services/leader/getdataLeader.dart';
 
@@ -19,15 +22,9 @@ class _AddEventPageState extends State<AddEventPage> {
   late TextEditingController _teacherInChargeController;
   late TextEditingController _projectController;
 
-  List<Map<String, String>> _teachers = [];
-  List<Map<String, String>> _projects = [];
-
-  String? _selectedTeacher;
-  String? _selectedProject;
+  final leaderService = LeaderService();
 
   bool _isLoading = false;
-  String? clgDbId;  // Declare clgDbId to store the College Database ID
-
   @override
   void initState() {
     super.initState();
@@ -36,43 +33,12 @@ class _AddEventPageState extends State<AddEventPage> {
     _venueController = TextEditingController();
     _teacherInChargeController = TextEditingController();
     _projectController = TextEditingController();
-
-    // Fetch the clgDbId before fetching teachers and projects
-    _fetchClgDbIdAndData();
   }
 
-  // Fetch the College DB ID and then fetch teachers and projects
-  Future<void> _fetchClgDbIdAndData() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // Fetch leader details (including clgDbId)
-      final leaderService = LeaderService();
-      final leaderDetails = await leaderService.getLeaderDetails();
-      clgDbId = leaderDetails['clgDbId'];  // Get the clgDbId from the leader data
-
-      if (clgDbId != null) {
-        // Fetch teachers and projects only if we have clgDbId
-        final eventService = LeaderAddEvent();
-        final teachers = await eventService.getTeachers(clgDbId!);
-        final projects = await eventService.getProjects(clgDbId!);
-
-        setState(() {
-          _teachers = teachers;
-          _projects = projects;
-          _isLoading = false;
-        });
-      } else {
-        throw Exception("College DB ID not found");
-      }
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
-      _showSnackbar("Failed to fetch data: $e", Colors.red);
-    }
+  @override
+  void dispose() {
+    _dateController.dispose();
+    super.dispose();
   }
 
   // Submit the Event
@@ -82,6 +48,11 @@ class _AddEventPageState extends State<AddEventPage> {
         _isLoading = true;
       });
 
+      final leaderDetails = await leaderService.getLeaderDetails();
+      final clgDbId = leaderDetails['clgDbId'];
+      final currentnssbatch = leaderDetails['nssBatch'];
+      final leaderId = leaderDetails['leader_id'];
+
       final eventService = LeaderAddEvent();
       final eventData = {
         'name': _nameController.text,
@@ -90,8 +61,8 @@ class _AddEventPageState extends State<AddEventPage> {
         'venue': _venueController.text,
         'teacher_incharge': _teacherInChargeController.text,
         'projectName': _projectController.text,
-        'leader_id': 'leader123', // Replace this with the actual leader ID
-        'currentNssBatch': '2020-2024',
+        'leader_id': leaderId, // Replace this with the actual leader ID
+        'currentNssBatch': currentnssbatch,
       };
 
       try {
@@ -136,57 +107,13 @@ class _AddEventPageState extends State<AddEventPage> {
           child: ListView(
             children: [
               TextInputField(label: 'Event Name', controller: _nameController),
-              TextFormField(
-                controller: _dateController,
-                decoration: const InputDecoration(labelText: 'Event Date (e.g. 2023-12-01T09:00:00Z)'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter event date';
-                  }
-                  return null;
-                },
+              DatePickerWidget(
+                dateController: _dateController,
+                label: 'Event Date',
               ),
               TextInputField(label: 'Venue', controller: _venueController),
-              DropdownButtonFormField<String>(
-                items: _teachers
-                    .map((teacher) => DropdownMenuItem(
-                  value: teacher['teacher_id'],
-                  child: Text(teacher['name']!),
-                ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedTeacher = value;
-                  });
-                },
-                decoration: const InputDecoration(labelText: 'Select Teacher'),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a teacher';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<String>(
-                items: _projects
-                    .map((project) => DropdownMenuItem(
-                  value: project['project_id'],
-                  child: Text(project['projectName']!),
-                ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedProject = value;
-                  });
-                },
-                decoration: const InputDecoration(labelText: 'Select Project'),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a project';
-                  }
-                  return null;
-                },
-              ),
+              TeacherDropdownPage(teacherController: _teacherInChargeController),
+              ProjectDropdownPage(projectController: _projectController,),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submitEvent,
