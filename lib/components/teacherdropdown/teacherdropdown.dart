@@ -32,18 +32,24 @@ class _TeacherDropdownPageState extends State<TeacherDropdownPage> {
     try {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
-        final List<dynamic> teachersList = jsonDecode(response.body);
-        setState(() {
-          _teachers = teachersList
-              .map((teacher) => {
-            'teacher_id': teacher['teacher_id'].toString(),
-            'name': teacher['name'].toString(),
-          })
-              .toList();
-          _isLoading = false;
-        });
+        final responseData = jsonDecode(response.body);
+
+        if (responseData is Map<String, dynamic> && responseData.containsKey('teachersAndPos')) {
+          final List<dynamic> teachersList = responseData['teachersAndPos'];
+          setState(() {
+            _teachers = teachersList
+                .map((teacher) => {
+              'teacher_id': teacher['teacher_id'].toString(),
+              'name': teacher['name'].toString(),
+            })
+                .toList();
+            _isLoading = false;
+          });
+        } else {
+          throw Exception("Invalid response format: Missing 'teachersAndPos'");
+        }
       } else {
-        throw Exception("Failed to load teachers");
+        throw Exception("Failed to load teachers: ${response.statusCode}");
       }
     } catch (e) {
       setState(() {
@@ -65,7 +71,7 @@ class _TeacherDropdownPageState extends State<TeacherDropdownPage> {
       items: _teachers
           .map(
             (teacher) => DropdownMenuItem(
-          value: teacher['teacher_id'],
+          value: teacher['name'],
           child: Text(teacher['name']!),
         ),
       )

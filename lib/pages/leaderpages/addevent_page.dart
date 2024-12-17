@@ -57,18 +57,25 @@ class _AddEventPageState extends State<AddEventPage> {
       final eventData = {
         'name': _nameController.text,
         'date': _dateController.text,
-        'level': 'College', // You can modify this as per your need
+        'level': 'College',
         'venue': _venueController.text,
         'teacher_incharge': _teacherInChargeController.text,
         'projectName': _projectController.text,
-        'leader_id': leaderId, // Replace this with the actual leader ID
+        'leader_id': leaderId,
         'currentNssBatch': currentnssbatch,
       };
 
       try {
         final success = await eventService.createEvent(clgDbId!, eventData);
         if (success) {
+
           _showSnackbar("Event created successfully", Colors.green);
+          // Clear all fields
+          _nameController.clear();
+          _dateController.clear();
+          _venueController.clear();
+          _teacherInChargeController.clear();
+          _projectController.clear();
         } else {
           _showSnackbar("Failed to create event", Colors.red);
         }

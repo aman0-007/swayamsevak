@@ -32,18 +32,24 @@ class _ProjectDropdownPageState extends State<ProjectDropdownPage> {
     try {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
-        final List<dynamic> projectsList = jsonDecode(response.body);
-        setState(() {
-          _projects = projectsList
-              .map((project) => {
-            'project_id': project['project_id'].toString(),
-            'projectName': project['projectName'].toString(),
-          })
-              .toList();
-          _isLoading = false;
-        });
+        final responseData = jsonDecode(response.body);
+
+        if (responseData is Map<String, dynamic> && responseData.containsKey('projects')) {
+          final List<dynamic> projectsList = responseData['projects'];
+          setState(() {
+            _projects = projectsList
+                .map((project) => {
+              'project_id': project['_id'].toString(),
+              'projectName': project['projectName'].toString(),
+            })
+                .toList();
+            _isLoading = false;
+          });
+        } else {
+          throw Exception("Invalid response format: Missing 'projects'");
+        }
       } else {
-        throw Exception("Failed to load projects");
+        throw Exception("Failed to load projects: ${response.statusCode}");
       }
     } catch (e) {
       setState(() {
@@ -65,7 +71,7 @@ class _ProjectDropdownPageState extends State<ProjectDropdownPage> {
       items: _projects
           .map(
             (project) => DropdownMenuItem(
-          value: project['project_id'],
+          value: project['projectName'],
           child: Text(project['projectName']!),
         ),
       )
