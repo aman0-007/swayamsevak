@@ -4,6 +4,7 @@ import 'package:swayamsevak/main.dart';
 import 'package:swayamsevak/pages/enrollment_page.dart';
 import 'package:swayamsevak/pages/leaderpages/addevent_page.dart';
 import 'package:swayamsevak/pages/leaderpages/allstudents.dart';
+import 'package:swayamsevak/pages/leaderpages/markattendance_page.dart';
 import 'package:swayamsevak/pages/popages/addGroupName.dart';
 import 'package:swayamsevak/pages/popages/adddepartment_page.dart';
 import 'package:swayamsevak/pages/popages/addpo_page.dart';
@@ -31,6 +32,11 @@ GoRouter router = GoRouter(
     GoRoute(
       path: '/applyforleader',
       builder: (context, state) => const ApplyLeaderPage(),
+    ),
+
+    GoRoute(
+      path: '/marksAttendance',
+      builder: (context, state) =>  MarkAttendancePage(),
     ),
 
     //=============================== Volunteer =================================================
