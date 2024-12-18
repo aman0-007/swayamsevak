@@ -8,11 +8,61 @@ class PoApproveEventPage extends StatefulWidget {
 
 class _PoApproveEventPageState extends State<PoApproveEventPage> {
   late Future<List<Map<String, dynamic>>> _eventsFuture;
+  final NotDoneEvents _eventService = NotDoneEvents();
 
   @override
   void initState() {
     super.initState();
-    _eventsFuture = NotDoneEvents().fetchNotDoneEvents();
+    _fetchEvents();
+  }
+
+  void _fetchEvents() {
+    setState(() {
+      _eventsFuture = _eventService.fetchNotDoneEvents();
+    });
+  }
+
+  Future<void> _showApprovalDialog(BuildContext context, String eventId) async {
+    final theme = Theme.of(context);
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            "Approve Event",
+            style: theme.textTheme.titleMedium,
+          ),
+          content: Text(
+            "Are you sure you want to approve this event?",
+            style: theme.textTheme.bodyMedium,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text("Cancel", style: theme.textTheme.labelLarge),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text("Approve", style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result == true) {
+      try {
+        await _eventService.updateEventStatus(eventId);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Event status updated successfully!")),
+        );
+        _fetchEvents(); // Refresh events after updating
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error updating event: $e")),
+        );
+      }
+    }
   }
 
   @override
@@ -67,7 +117,7 @@ class _PoApproveEventPageState extends State<PoApproveEventPage> {
                     children: [
                       const SizedBox(height: 4),
                       Text(
-                        "Level: ${event['level'] ?? 'N/A'}",
+                        "Teacher Incharge: ${event['teacher_incharge'] ?? 'N/A'}",
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
@@ -75,12 +125,22 @@ class _PoApproveEventPageState extends State<PoApproveEventPage> {
                         style: theme.textTheme.bodyMedium,
                       ),
                       Text(
-                        "Leader: ${event['leader_id'] ?? 'N/A'}",
+                        "Project: ${event['projectName'] ?? 'N/A'}",
                         style: theme.textTheme.bodyMedium,
                       ),
                     ],
                   ),
                   trailing: Icon(Icons.arrow_forward_ios, color: theme.colorScheme.onSurface),
+                  onTap: () {
+                    final eventId = event['event_id']?.toString();
+                    if (eventId != null) {
+                      _showApprovalDialog(context, eventId);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Invalid event data")),
+                      );
+                    }
+                  },
                 ),
               );
             },
