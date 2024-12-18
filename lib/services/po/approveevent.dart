@@ -1,32 +1,21 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swayamsevak/services/po/getpoData.dart';
 
 class NotDoneEvents {
-  // Fetch clgDbId and currentNssBatch from SharedPreferences
-  Future<Map<String, String>> getLeaderDetails() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userDataJson = prefs.getString('user_data');
+  final POService _poService = POService();
 
-    if (userDataJson != null) {
-      final userData = jsonDecode(userDataJson);
-      final studentData = userData['student'];
-
-      return {
-        'clgDbId': userData['clgDbId'],
-        'currentNssBatch': studentData['currentNssBatch'],
-      };
-    }
-    throw Exception("Leader data not found");
-  }
-
-  // Fetch "Not Done" events from the API
   Future<List<Map<String, dynamic>>> fetchNotDoneEvents() async {
-    final leaderDetails = await getLeaderDetails();
-    final clgDbId = leaderDetails['clgDbId'];
-    final currentNssBatch = leaderDetails['currentNssBatch'];
+    final poDetails = await _poService.getPOData();
+    final clgDbId = poDetails['clgDbId'];
+    final currentNssBatch = poDetails['currentNssBatch'];
+
+    if (clgDbId == null || currentNssBatch == null) {
+      throw Exception("Missing required PO data: clgDbId or currentNssBatch");
+    }
 
     final apiUrl = "http://213.210.37.81:1234/api/events/not-done/$clgDbId/$currentNssBatch";
+    print(apiUrl);
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {

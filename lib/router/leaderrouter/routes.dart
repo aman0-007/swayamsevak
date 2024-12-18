@@ -9,6 +9,7 @@ import 'package:swayamsevak/pages/popages/adddepartment_page.dart';
 import 'package:swayamsevak/pages/popages/addpo_page.dart';
 import 'package:swayamsevak/pages/popages/addproject_page.dart';
 import 'package:swayamsevak/pages/popages/addteacher_page.dart';
+import 'package:swayamsevak/pages/popages/approveevent_page.dart';
 import 'package:swayamsevak/pages/popages/makeleader_page.dart';
 import 'package:swayamsevak/pages/popages/notselectedstudents_page.dart';
 import 'package:swayamsevak/pages/volunteerpages/applyleader.dart';
@@ -45,6 +46,10 @@ GoRouter router = GoRouter(
 
     //=============================== PO =================================================
     GoRoute(
+      path: '/poApproveEvent',
+      builder: (context, state) =>  PoApproveEventPage(),
+    ),
+    GoRoute(
       path: '/poAddProject',
       builder: (context, state) => const AddProjectPage(),
     ),
@@ -54,7 +59,7 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/poAddGroup',
-      builder: (context, state) =>  AddGroupPage(),
+      builder: (context, state) =>  const AddGroupPage(),
     ),
     GoRoute(
       path: '/poAddTeacher',
@@ -72,5 +77,6 @@ GoRouter router = GoRouter(
       path: '/poAppliedLeadersPage',
       builder: (context, state) =>  AppliedLeadersPage(),
     ),
+
   ],
 );
