@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:swayamsevak/pages/leaderpages/addevent_page.dart';
+import 'package:swayamsevak/pages/leaderpages/markattendance_page.dart';
 
 class LeaderOptionsPage extends StatelessWidget {
   const LeaderOptionsPage({Key? key}) : super(key: key);
 
   final List<Map<String, dynamic>> options = const [
-    {"title": "Add Event", "route": "/leaderAddEvent", "icon": Icons.event},
+    {"title": "Add Event", "widget": AddEventPage(), "icon": Icons.event},
     {"title": "Confirm Student", "route": "/confirmStudent", "icon": Icons.check_circle},
     {"title": "Assign Group", "route": "/assignGroup", "icon": Icons.group_add},
     {"title": "All Groups", "route": "/allGroups", "icon": Icons.group},
     {"title": "Previous Events", "route": "/previousEvents", "icon": Icons.history},
     {"title": "All Students", "route": "/allStudents", "icon": Icons.person},
-    {"title": "Marks Attendance", "route": "/marksAttendance", "icon": Icons.checklist},
+    {"title": "Marks Attendance", "widget": MarkAttendancePage(), "icon": Icons.checklist},
     {"title": "Update Student ID", "route": "/updateStudentID", "icon": Icons.edit},
     {"title": "Complete Event", "route": "/completeEvent", "icon": Icons.done_all},
     {"title": "Live Events", "route": "/liveEvents", "icon": Icons.live_tv},
@@ -39,7 +40,12 @@ class LeaderOptionsPage extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                GoRouter.of(context).go(options[index]['route'] ?? '');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => options[index]['widget'] as Widget,
+                  ),
+                );
               },
               child: Card(
                 elevation: 6, // Increased elevation for better shadow effect

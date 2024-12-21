@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swayamsevak/components/notdoneeventsdropdown/notdoneeventsdropdown.dart';
 import 'package:swayamsevak/components/position/positiondropdown.dart';
+import 'package:swayamsevak/pages/leaderpages/markattendance2_page.dart';
 
 class MarkAttendancePage extends StatefulWidget {
   const MarkAttendancePage({Key? key}) : super(key: key);
@@ -31,7 +32,19 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Event Details Form")),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous page
+          },
+        ),
+        title: Text(
+          'Event Details Form',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
+      ),
+      //appBar: AppBar(title: const Text("Event Details Form")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -96,48 +109,15 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
       return;
     }
 
-    final attendanceData = {
-      "Event Name": _eventDropdownController.text,
-      "Event ID": _eventIdController.text,
-      "Leader ID": _leaderIdController.text,
-      "Level": _levelController.text,
-      "Position": position,
-      "Hours": hours,
-    };
-
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SubmitPage(attendanceData: attendanceData),
-      ),
-    );
-  }
-}
-
-
-
-class SubmitPage extends StatelessWidget {
-  final Map<String, String> attendanceData;
-
-  const SubmitPage({Key? key, required this.attendanceData}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Submit Attendance Data")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: attendanceData.entries.map((entry) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                "${entry.key}: ${entry.value}",
-                style: const TextStyle(fontSize: 16),
-              ),
-            );
-          }).toList(),
+        builder: (context) => AttendanceScan(
+          leaderId : _leaderIdController.text,
+          eventId : _eventIdController.text,
+          position : position,
+          level : _levelController.text,
+          hours : int.tryParse(hours) ?? 0,
         ),
       ),
     );

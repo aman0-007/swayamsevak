@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:swayamsevak/pages/popages/addGroupName.dart';
+import 'package:swayamsevak/pages/popages/approveevent_page.dart';
+import 'package:swayamsevak/pages/popages/adddepartment_page.dart';
+import 'package:swayamsevak/pages/popages/addpo_page.dart';
+import 'package:swayamsevak/pages/popages/addproject_page.dart';
+import 'package:swayamsevak/pages/popages/addteacher_page.dart';
+import 'package:swayamsevak/pages/popages/makeleader_page.dart';
+import 'package:swayamsevak/pages/popages/notselectedstudents_page.dart';
 
 class POOptionsPage extends StatelessWidget {
-  const POOptionsPage({Key? key}) : super(key: key);
+  POOptionsPage({Key? key}) : super(key: key);
 
-  final List<Map<String, dynamic>> options = const [
-    {"title": "Approve Event", "route": "/poApproveEvent", "icon": Icons.event_available},
-    {"title": "Make Leader", "route": "/poAppliedLeadersPage", "icon": Icons.add},
-    {"title": "Confirm Students", "route": "/poConfirmStudents", "icon": Icons.volunteer_activism},
-    {"title": "Add Project", "route": "/poAddProject", "icon": Icons.add_box},
-    {"title": "Add Teacher", "route": "/poAddTeacher", "icon": Icons.person_add},
-    {"title": "Add PO", "route": "/poAddPO", "icon": Icons.account_circle},
-    {"title": "Approve Leader", "route": "/poApproveLeader", "icon": Icons.supervisor_account},
-    {"title": "All Events", "route": "/poAllEvents", "icon": Icons.event},
-    {"title": "All Students", "route": "/poAllStudents", "icon": Icons.person},
-    {"title": "All Groups", "route": "/poAllGroups", "icon": Icons.groups},
-    {"title": "Stats", "route": "/poStats", "icon": Icons.bar_chart},
-    {"title": "Add Department", "route": "/poAddDepartment", "icon": Icons.add},
-    {"title": "Add Group", "route": "/poAddGroup", "icon": Icons.add},
+  final List<Map<String, dynamic>> options =  [
+    {"title": "Approve Event", "widget": PoApproveEventPage(), "icon": Icons.event_available},
+    {"title": "Make Leader", "widget": AppliedLeadersPage(), "icon": Icons.add},
+    {"title": "Confirm Students", "widget": NotSelectedStudents(), "icon": Icons.volunteer_activism},
+    {"title": "Add Project", "widget": AddProjectPage(), "icon": Icons.add_box},
+    {"title": "Add Teacher", "widget": AddTeacherPage(), "icon": Icons.person_add},
+    {"title": "Add PO", "widget": AddPoPage(), "icon": Icons.account_circle},
+    {"title": "Approve Leader", "widget": AddPoPage(), "icon": Icons.supervisor_account},
+    {"title": "All Events", "widget": AddPoPage(), "icon": Icons.event},
+    {"title": "All Students", "widget": AddPoPage(), "icon": Icons.person},
+    {"title": "All Groups", "widget": AddPoPage(), "icon": Icons.groups},
+    {"title": "Stats", "widget": AddPoPage(), "icon": Icons.bar_chart},
+    {"title": "Add Department", "widget": AddDepartmentPage(), "icon": Icons.add},
+    {"title": "Add Group", "widget": AddGroupPage(), "icon": Icons.add},
   ];
 
   @override
@@ -37,7 +44,12 @@ class POOptionsPage extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                GoRouter.of(context).go(options[index]['route'] ?? '');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => options[index]['widget'] as Widget,
+                  ),
+                );
               },
               child: Card(
                 elevation: 6,

@@ -59,7 +59,6 @@ class CustomTheme {
         ),
       ),
 
-      // AppBar theme
       appBarTheme: AppBarTheme(
         backgroundColor: coral, // App bar background color
         titleTextStyle: GoogleFonts.oswald(
@@ -68,7 +67,7 @@ class CustomTheme {
           color: white, // App bar title color
         ),
         elevation: 4,
-        iconTheme: IconThemeData(color: white), // App bar icons color
+        iconTheme: IconThemeData(color: white),
       ),
 
       // Button themes

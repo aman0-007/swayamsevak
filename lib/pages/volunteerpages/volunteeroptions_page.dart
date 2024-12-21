@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swayamsevak/pages/volunteerpages/applyleader.dart';
 
 class StudentOptionsPage extends StatelessWidget {
   const StudentOptionsPage({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class StudentOptionsPage extends StatelessWidget {
     // {"title": "Assign Group", "route": "/assignGroup", "icon": Icons.group_add},
     // {"title": "All Groups", "route": "/allGroups", "icon": Icons.group},
     // {"title": "Previous Events", "route": "/previousEvents", "icon": Icons.history},
-    {"title": "Apply-Leader", "route": "/applyforleader", "icon": Icons.person},
+    {"title": "Apply-Leader", "widget": ApplyLeaderPage(), "icon": Icons.person},
     // {"title": "Marks Attendance", "route": "/marksAttendance", "icon": Icons.checklist},
     // {"title": "Update Student ID", "route": "/updateStudentID", "icon": Icons.edit},
     // {"title": "Complete Event", "route": "/completeEvent", "icon": Icons.done_all},
@@ -39,7 +40,12 @@ class StudentOptionsPage extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                GoRouter.of(context).go(options[index]['route'] ?? '');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => options[index]['widget'] as Widget,
+                  ),
+                );
               },
               child: Card(
                 elevation: 6, // Increased elevation for better shadow effect
