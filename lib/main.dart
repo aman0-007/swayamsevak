@@ -8,6 +8,8 @@ import 'package:swayamsevak/pages/login_page.dart';
 import 'package:swayamsevak/router/leaderrouter/routes.dart';
 import 'package:swayamsevak/theme/myAppTheme.dart';
 
+import 'pages/auth/authoption.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,12 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: CustomTheme.theme,
-      routerConfig: router,
-      // home: const CheckLoginState(),
+      // routerConfig: router,
+      home: const CheckLoginState(),
     );
   }
 }
@@ -73,7 +75,7 @@ class CheckLoginState extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || snapshot.data == 'login') {
-          return const LoginPage();
+          return const AuthPage();
         } else {
           final role = snapshot.data;
 
@@ -91,28 +93,6 @@ class CheckLoginState extends StatelessWidget {
           }
         }
       },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage();
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Custom Theme Example')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: const Text('Press Me'),
-        ),
-      ),
     );
   }
 }

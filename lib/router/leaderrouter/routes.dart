@@ -8,8 +8,8 @@ GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      //builder: (context, state) => const EnrollmentPage(),
-      builder: (context, state) => const LeaderDashboard(),
+      builder: (context, state) => const EnrollmentPage(),
+      //builder: (context, state) => const LeaderDashboard(),
     ),
   ],
 );

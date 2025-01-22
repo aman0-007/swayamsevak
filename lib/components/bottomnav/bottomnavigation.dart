@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swayamsevak/pages/dashboard.dart';
 import 'package:swayamsevak/pages/popages/pooptions.dart';
+
+import '../../pages/auth/authoption.dart';
 
 class POBottomNavApp extends StatefulWidget {
   const POBottomNavApp({Key? key}) : super(key: key);
@@ -16,7 +19,7 @@ class _POBottomNavAppState extends State<POBottomNavApp> {
   final List<Widget> _pages = [
     const UserDashboard(),
      POOptionsPage(),
-    const SettingsView(),
+    const ProfileView(),
   ];
 
   void _onItemTapped(int index) {
@@ -50,8 +53,8 @@ class _POBottomNavAppState extends State<POBottomNavApp> {
             label: 'Options',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         selectedItemColor: theme.colorScheme.primary,
@@ -82,16 +85,47 @@ class _POBottomNavAppState extends State<POBottomNavApp> {
   }
 }
 
-// Placeholder for SettingsView
-class SettingsView extends StatelessWidget {
-  const SettingsView({Key? key}) : super(key: key);
+
+class ProfileView extends StatelessWidget {
+  const ProfileView({Key? key}) : super(key: key);
+
+  Future<void> _logout(BuildContext context) async {
+    // Clear all saved SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AuthPage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        'Settings Page',
-        style: Theme.of(context).textTheme.titleMedium,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'Profile Page',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () => _logout(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text(
+              'Logout',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'charts/barchart.dart';
 import 'charts/circular_chart.dart';
+import 'charts/donutchart.dart';
+import 'charts/dualcolor_barchart.dart';
+import 'charts/linechart.dart';
+import 'charts/piechart.dart';
+import 'charts/progresslinechart.dart';
+import 'charts/singlecolor_barchart.dart'; // Make sure the import path is correct
 
 class LeaderDashboard extends StatelessWidget {
-  const LeaderDashboard({super.key});
+  const LeaderDashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,18 +17,21 @@ class LeaderDashboard extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Dashboard"),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate to the Circular Chart Page
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CircularChartPage(),
-              ),
-            );
-          },
-          child: const Text("View Circular Chart"),
+      body:  Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DonutChart(),
+              ProgressLineChart(),
+              RadialPieChart(),
+              CircularChart(), // Using the CircularChart widget here
+              BarChart(),
+              LineChart(),
+              DualColorBarChart(),
+              SingleColorBarChart(),
+            ],
+          ),
         ),
       ),
     );
