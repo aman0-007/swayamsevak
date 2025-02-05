@@ -25,6 +25,10 @@ class LoginService {
             };
           }
         }
+        else {
+          print(response.statusCode + jsonDecode(response.body));
+          print("======================================================");
+        }
       } catch (e) {
         // Log or handle the exception as needed
       }

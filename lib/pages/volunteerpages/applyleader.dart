@@ -28,6 +28,7 @@ class _ApplyLeaderPageState extends State<ApplyLeaderPage> {
       final details = await _leaderService.getUserDetails();
       setState(() {
         _userDetails = details;
+        print(_userDetails);
       });
     } catch (e) {
       _showSnackbar(e.toString(), Colors.red);
@@ -91,27 +92,27 @@ class _ApplyLeaderPageState extends State<ApplyLeaderPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Name: ${_userDetails!['name']} ${_userDetails!['surname']}",
+              "Name: ${_userDetails!['name'] ?? ''} ${_userDetails!['surname'] ?? ''}",
               style: theme.textTheme.bodyLarge,
             ),
             Text(
-              "Email: ${_userDetails!['email']}",
+              "Email: ${_userDetails!['email'] ?? ''}",
               style: theme.textTheme.bodyMedium,
             ),
             Text(
-              "Gender: ${_userDetails!['gender']}",
+              "Gender: ${_userDetails!['gender'] ?? ''}",
               style: theme.textTheme.bodyMedium,
             ),
             Text(
-              "Current Year: ${_userDetails!['currentYear']}",
+              "Current Year: ${_userDetails!['currentYear'] ?? ''}",
               style: theme.textTheme.bodyMedium,
             ),
             Text(
-              "NSS Batch: ${_userDetails!['nssBatch']}",
+              "NSS Batch: ${_userDetails!['nssBatch'] ?? ''}",
               style: theme.textTheme.bodyMedium,
             ),
             Text(
-              "Leader Status: ${_userDetails!['isLeader']}",
+              "Leader Status: ${_userDetails!['isLeader'] ?? ''}",
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: 20),

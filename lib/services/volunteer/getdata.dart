@@ -12,25 +12,24 @@ class VolunteerService {
       if (userData.containsKey('student')) {
         final studentData = userData['student'];
         return {
-          'clgDbId': userData['clgDbId'],
-          'stud_id': studentData['stud_id'],
-          'name': studentData['name'],
-          'surname': studentData['surname'],
-          'email': studentData['email'],
-          'gender': studentData['gender'],
-          'currentYear': studentData['CurrentYear'],
-          'isLeader': studentData['is_leader'],
-          'nssBatch': studentData['currentNssBatch'],
+          'clgDbId': userData['clgDbId'] ?? '',
+          'stud_id': studentData['stud_id'] ?? '',
+          'name': studentData['name'] ?? '',
+          'surname': studentData['surname'] ?? '',
+          'email': studentData['email'] ?? '',
+          'gender': studentData['gender'] ?? '',
+          'currentYear': studentData['CurrentYear'] ?? '',
+          'isLeader': studentData['is_leader'] ?? '',
+          'nssBatch': studentData['currentNssBatch'] ?? '',
         };
       }
     }
     throw Exception("User data not found");
   }
 
-
   Future<bool> applyForLeader(String clgDbId, String studId) async {
     final apiUrl = "http://213.210.37.81:1234/api/apply-leader/$clgDbId/$studId";
-    
+    print(apiUrl);
     final response = await http.put(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);

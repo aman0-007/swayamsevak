@@ -24,7 +24,12 @@ class _NotSelectedStudentsState extends State<NotSelectedStudents> {
     if (clgDbId == null) {
       throw Exception('College Database ID not found');
     }
-    return fetchStudents(clgDbId);
+    List<Student> students = await fetchStudents(clgDbId);
+
+    // Sort students alphabetically by name
+    students.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+    return students;
   }
 
   Future<List<Student>> fetchStudents(String clgDbId) async {
@@ -48,6 +53,7 @@ class _NotSelectedStudentsState extends State<NotSelectedStudents> {
     final url = 'http://213.210.37.81:1234/api/direct-update-status/$clgDbId/$studentId';
     try {
       final response = await http.put(Uri.parse(url));
+      print("========================================================");
       print(url);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
